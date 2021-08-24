@@ -8,6 +8,7 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
             <link rel="icon" href="{{ asset('assets/img/favicon.png') }}">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         {% endblock %}
 
         {% block javascripts %}
@@ -17,18 +18,32 @@
     <body>
 
         <header><div>
-                <h1><img src="{{ asset("assets/img/logo.png") }}" alt="logo du site">Bienvenue sur la Home Page du MainController</h1>
+                <h1><img src="{{ asset("assets/img/logo.png") }}" alt="logo du site">Bucket-List</h1>
                 </div>
         </header>
-        <nav>
-            <a href="{{ path('home') }}">Lien vers accueil</a>
+        <nav  class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('about') }}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('wish_list') }}">Liste</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('wish_detail',{'id':3}) }}">Detail</a>
+                </li>
+            </ul>
+
         </nav>
         <content>
             {% block body %}{% endblock %}
         </content>
 
        <footer>
-          &copy Bucket-List {{ "now"|date("Y")}}
+          &copy Bucket-List {{ "now"|date("Y")}} - <a href="{{ path('legalStuff') }}">Mentions Legales</a>
        </footer>
     </body>
 </html>

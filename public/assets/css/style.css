@@ -2,3 +2,10 @@ body{
     background: white;
     font-family: Candara;
 }
+header{
+    background:lightsteelblue;
+    text-align: center;
+}
+nav{
+    background: #999999;
+}
