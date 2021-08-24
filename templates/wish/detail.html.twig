@@ -1,2 +1,8 @@
 {% extends 'base.html.twig' %}
-{%  block body %}{{ id }}{% endblock %}
+{%  block body %}
+    {% if (wish.isPublished) %}
+        <h2>{{ wish.title }}</h2>
+        <i>{{ wish.author }}</i>
+        <p>{{ wish.description }}</p>
+    {% endif %}
+{% endblock %}
