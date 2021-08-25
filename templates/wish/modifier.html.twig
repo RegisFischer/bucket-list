@@ -27,9 +27,14 @@
             </div>
             <div class="row ">
                 <div class="col offset-5">
+                    {{ form_row(wishForm.isPublished) }}
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col offset-5">
                     {{ form_row(wishForm.Publier, { 'attr': {'class': 'btn btn-primary'}} ) }}
                 </div>
-               </div>
+            </div>
 
             {{ form_end(wishForm, {render_rest: false})    }}
         </div>

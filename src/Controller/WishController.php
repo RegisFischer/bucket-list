@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Wish;
+use App\Form\WishType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,7 +32,7 @@ class WishController extends AbstractController
         dump(new \DateTime());
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Wish::class);
-        $wishes = $repo->findAll();
+        $wishes = $repo->findBy(["isPublished"=>true],["dateCtreated"=>"DESC"]);
         return $this->render('wish/list.html.twig',[
             'wishes'=>$wishes
         ]);
@@ -52,18 +54,57 @@ class WishController extends AbstractController
     /**
      * @Route("/ajouter", name="ajouter")
      */
-    public function ajouter(){
-        $em = $this->getDoctrine()->getManager();
+    public function ajouter(Request $request,EntityManagerInterface $entityManager):Response{
         $wish = new Wish();
-        $wish->setTitle("troisiemeIdee");
-        $wish->setDescription("J'aime les idees surtout avec de la vanille");
-        $wish->setAuthor("Jean-Luc Melenchon");
-        $wish->setIsPublished(true);
-        $wish->setDateCtreated(new \DateTime());
-        $em->persist($wish);
-        $em->flush();
-        return $this->render('base.html.twig');
+
+        $wishForm = $this->createForm(WishType::class,$wish);
+        $wishForm->handleRequest($request);
+
+        if($wishForm->isSubmitted() && $wishForm->isValid()){
+            $wish->setDateCtreated(new \DateTime("now"));
+            $wish->setIsPublished(true);
+            $entityManager->persist($wish);
+            $entityManager->flush();
+
+            $this->addFlash('success','Wish Ajouté');
+            return $this->redirectToRoute('wish_list');
+        }
+
+        return $this->render('wish/ajouter.html.twig',[
+            "wishForm"=> $wishForm->createView()
+        ]);
     }
 
+    /**
+     * @Route("/modifier/{id}", name="modifier")
+     */
+    public function modifier(Request $request,EntityManagerInterface $entityManager,int $id):Response{
+       $wish = $entityManager->getRepository(Wish::class)->find($id);
+        $wishForm = $this->createForm(WishType::class,$wish);
+        $wishForm->handleRequest($request);
+
+        if($wishForm->isSubmitted() && $wishForm->isValid()){
+
+            $entityManager->flush();
+
+            $this->addFlash('success','Wish Modifié');
+            return $this->redirectToRoute('wish_list');
+        }
+
+        return $this->render('wish/modifier.html.twig',[
+            "wishForm"=>$wishForm->createView()
+            ]);
+    }
+
+    /**
+     * @Route("/supprimer/{id}",name="supprimer")
+     */
+    public function supprimer(EntityManagerInterface $em,int $id):Response{
+        $wish = $em->getRepository(Wish::class)->find($id);
+        $em->remove($wish);
+        $em->flush();
+        $this->addFlash('success','Wish Supprimé');
+        return $this->redirectToRoute('wish_list');
+    }
 
 }

@@ -1,6 +1,24 @@
 {% extends 'base.html.twig' %}
 {%  block body %}<h2>Liste des Buckets</h2>
-{%  for wish in wishes%}
-    <p><a href="{{ path('wish_detail',{'id':wish.id}) }}">{{ wish.title }}</a></p>
-    {% endfor %}
+    <table class="table table-striped">
+        <thead>
+            <th>Nom</th>
+            <th>Auteur</th>
+            <th>Date de Creation</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {%  for wish in wishes%}
+            <tr onclick="document.location='{{ path('wish_detail',{'id':wish.id}) }}'">
+                <td>{{ wish.title}}</td>
+                <td>{{wish.author }}</td>
+                <td>{{wish.dateCtreated|date("d/m/Y H:i") }}</td>
+                <td><a href="{{ path('wish_modifier',{'id':wish.id}) }}"><button class="btn btn-secondary">Modifier</button></a>
+                    <a href="{{ path('wish_supprimer',{'id':wish.id}) }}"><button class="btn btn-danger">Supprimer</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}
