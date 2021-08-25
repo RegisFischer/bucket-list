@@ -2,7 +2,7 @@
 {%  block body %}
     {% if (wish.isPublished) %}
         <h2>{{ wish.title }}</h2>
-        <i>{{ wish.author }}</i>
+        <i>{{ wish.author }} le {{ wish.dateCtreated|date("d/m/Y") }}</i>
         <p>{{ wish.description }}</p>
     {% endif %}
 {% endblock %}
