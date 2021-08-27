@@ -27,9 +27,7 @@ article{
 .img-detail{
     width: 200px;
 }
-tr{
-    cursor: pointer;
-}
+
 .container{
 
 }
@@ -44,6 +42,9 @@ tr{
 }
 .ligne:hover{
     background:grey;
+}
+tr{
+    cursor: pointer;
 }
 td,thead{
     text-align: center;

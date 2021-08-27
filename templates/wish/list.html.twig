@@ -1,18 +1,21 @@
 {% extends 'base.html.twig' %}
+{%  block javascripts %}
+{%  endblock %}
 {%  block body %}<h2>Liste des Buckets</h2>
-    <table class="table table-striped">
+
+    <table class="table table-striped dataTable" id="maTable">
         <thead>
-            <th><img class="icone" src="{{ asset("assets/img/titre.png") }}" alt="auteur">Titre</th>
-            <th><img class="icone" src="{{ asset("assets/img/auteurs.png") }}" alt="auteur">Auteur</th>
-            <th colspan="3"><img class="icone" src="{{ asset("assets/img/date.png") }}" alt="auteur">Date de Creation</th>
-            <th colspan="2"><img class="icone" src="{{ asset("assets/img/action.jpg") }}" alt="auteur">Actions</th>
+            <th class="sorting" tabindex="0"><img class="icone" src="{{ asset("assets/img/titre.png") }}" alt="auteur">Titre</th>
+            <th tabindex="0"><img class="icone" src="{{ asset("assets/img/auteurs.png") }}" alt="auteur">Auteur</th>
+            <th tabindex="0" colspan="3"><img class="icone" src="{{ asset("assets/img/date.png") }}" alt="auteur">Date de Creation</th>
+            <th tabindex="0" colspan="2"><img class="icone" src="{{ asset("assets/img/action.jpg") }}" alt="auteur">Actions</th>
         </thead>
         <tbody>
             {%  for wish in wishes%}
             <tr onclick="document.location='{{ path('wish_detail',{'id':wish.id}) }}'" class="ligne">
                 <td>{{ wish.title}}</td>
                 <td>{{wish.author }}</td>
-                <td colspan="3">{{wish.dateCtreated|date("d/m/Y H:i") }}</td>
+                <td colspan="3">{{wish.created_at|date("d/m/Y H:i") }}</td>
                 <td colspan="2"><a href="{{ path('wish_modifier',{'id':wish.id}) }}"><button class="btn btn-secondary">Modifier</button></a>
                     <a href="{{ path('wish_supprimer',{'id':wish.id}) }}"><button class="btn btn-danger" onclick="confirm('Confirmez-vous la suppression ?')">Supprimer</button></a>
 
@@ -21,6 +24,7 @@
             {% endfor %}
         </tbody>
     </table>
+
 
 
 {% endblock %}

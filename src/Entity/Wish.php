@@ -46,7 +46,19 @@ class Wish
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateCtreated;
+    private $created_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="wishes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+
+    public function __construct(){
+        $this->created_at = new \DateTime("now");
+        $this->isPublished=true;
+}
 
     public function getId(): ?int
     {
@@ -89,7 +101,7 @@ class Wish
         return $this;
     }
 
-    public function getIsPublished(): ?bool
+    public function isPublished(): ?bool
     {
         return $this->isPublished;
     }
@@ -101,15 +113,35 @@ class Wish
         return $this;
     }
 
-    public function getDateCtreated(): ?\DateTimeInterface
+    public function getCreated_At(): ?\DateTimeInterface
     {
-        return $this->dateCtreated;
+        return $this->created_at;
     }
 
-    public function setDateCtreated(?\DateTimeInterface $dateCtreated): self
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
-        $this->dateCtreated = $dateCtreated;
+        $this->created_at = $created_at;
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+
+
 }

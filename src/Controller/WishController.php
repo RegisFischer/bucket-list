@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Wish;
 use App\Form\WishType;
+use App\Repository\CategoryRepository;
+use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WishController extends AbstractController
 {
+    private $em;
+    private $repo;
+
+    public function __construct(EntityManagerInterface $entityManager,WishRepository $repo){
+        $this->em = $entityManager;
+        $this->repo = $repo;
+    }
     /**
      * @Route("/", name="index")
      */
@@ -30,9 +40,9 @@ class WishController extends AbstractController
      */
     public function list(): Response{
         dump(new \DateTime());
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Wish::class);
-        $wishes = $repo->findBy(["isPublished"=>true],["dateCtreated"=>"DESC"]);
+
+        $wishes = $this->repo->findBy(["isPublished"=>true],["created_at"=>"DESC"]);
+        dump($wishes);
         return $this->render('wish/list.html.twig',[
             'wishes'=>$wishes
         ]);
@@ -41,31 +51,35 @@ class WishController extends AbstractController
     /**
      * @Route("/detail/{id}",name="detail")
      */
-    public function detail($id,EntityManagerInterface $entityManager): Response{
+    public function detail(int $id): Response{
 
-        $repo = $entityManager->getRepository(Wish::class);
-        $wish = $repo->find($id);
-
+        $wish = $this->repo->findByIDJoinCat($id);
+        dump($wish);
         return $this->render('wish/detail.html.twig',[
-            'wish'=>$wish
+            'wish'=>$wish,
         ]);
+    }
+
+    /**
+     * @Route("/data",name="data")
+     */
+    public function data(){
+        return $this->render('wish/dataTable.html.twig');
     }
 
     /**
      * @Route("/ajouter", name="ajouter")
      */
-    public function ajouter(Request $request,EntityManagerInterface $entityManager):Response{
+    public function ajouter(Request $request):Response{
         $wish = new Wish();
 
         $wishForm = $this->createForm(WishType::class,$wish);
         $wishForm->handleRequest($request);
 
         if($wishForm->isSubmitted() && $wishForm->isValid()){
-            $wish->setDateCtreated(new \DateTime("now"));
-            $wish->setIsPublished(true);
-            $entityManager->persist($wish);
-            $entityManager->flush();
 
+            $this->em->persist($wish);
+            $this->em->flush();
             $this->addFlash('success','Wish Ajouté');
             return $this->redirectToRoute('wish_list');
         }
@@ -78,15 +92,15 @@ class WishController extends AbstractController
     /**
      * @Route("/modifier/{id}", name="modifier")
      */
-    public function modifier(Request $request,EntityManagerInterface $entityManager,int $id):Response{
-       $wish = $entityManager->getRepository(Wish::class)->find($id);
+    public function modifier(Request $request,int $id):Response{
+        $wish = $this->repo->find($id);
+
         $wishForm = $this->createForm(WishType::class,$wish);
+        dump($wishForm);
         $wishForm->handleRequest($request);
 
         if($wishForm->isSubmitted() && $wishForm->isValid()){
-
-            $entityManager->flush();
-
+            $this->em->flush();
             $this->addFlash('success','Wish Modifié');
             return $this->redirectToRoute('wish_list');
         }
@@ -99,12 +113,17 @@ class WishController extends AbstractController
     /**
      * @Route("/supprimer/{id}",name="supprimer")
      */
-    public function supprimer(EntityManagerInterface $em,int $id):Response{
-        $wish = $em->getRepository(Wish::class)->find($id);
-        $em->remove($wish);
-        $em->flush();
+    public function supprimer(int $id):Response{
+        $wish = $this->em->getRepository(Wish::class)->find($id);
+        $this->em->remove($wish);
+        $this->em>flush();
         $this->addFlash('success','Wish Supprimé');
         return $this->redirectToRoute('wish_list');
+    }
+
+    private function getCategorie(CategoryRepository $repocat,int $id):Category
+    {
+        return $repocat->find($id);
     }
 
 }

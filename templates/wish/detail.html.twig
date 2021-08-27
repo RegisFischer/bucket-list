@@ -1,20 +1,25 @@
 {% extends 'base.html.twig' %}
 {%  block body %}
-    {% if (wish.isPublished) %}
+
         <div class="card mb-3" style="max-width: 540px;margin:auto">
         <img src="{{ asset("assets/img/logo-512.png") }}" class="card-img-top" style="width: 25%;margin:auto" alt="image logo">
         <div class="card-body">
             <h5 class="card-title">{{ wish.title }}</h5>
-            <p class="card-text">{{ wish.description }}</p>
+            <p class="card-text">{{ wish.category.name }}</p>
+            <p class="card-body">{{ wish.description }}</p>
+
         </div>
 
         <div class="card-footer">
-            <small class="text-muted">{{ wish.author }} le {{ wish.dateCtreated|date("d/m/Y H:i") }}</small>
+            <div class="row">
+                <small class="text-muted col-3">{{ wish.author }}</small>
+                <small class="text-muted col-4 offset-5">le {{ wish.created_at|date("d/m/Y H:i") }}</small>
+            </div>
+
         </div>
         </div>
 
         <h2></h2>
         <i></i>
         <p></p>
-    {% endif %}
 {% endblock %}
