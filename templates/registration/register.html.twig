@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1></h1>
+
+    <div class="container">
+        <h2>Ajouter un Wish</h2>
+        <div class="form-control mt-3 p-3 mx-auto">
+            {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm._token) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(registrationForm) }}
+            </div>
+            <div class="row mb-3">
+                <div class="col-2 offset-1">
+                    {{ form_label(registrationForm.email,'Adresse Email : ') }}
+                </div>
+                <div class="col-2">{{ form_widget(registrationForm.email) }}</div>
+                <div class="col-1  offset-2">
+                    {{ form_label(registrationForm.username,'Username : ') }}
+                </div>
+                <div class="col">{{ form_widget(registrationForm.username) }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-2  offset-1">
+                    {{ form_label(registrationForm.plainPassword,'Mot de Passe :') }}
+                </div>
+                <div class="col-5">{{ form_widget(registrationForm.plainPassword) }}</div>
+            </div>
+
+            <div class="row ">
+                <div class="col offset-5">
+                    {{ form_row(registrationForm.Inscription, { 'attr': {'class': 'btn btn-primary'}} ) }}
+                </div>
+            </div>
+
+            {{ form_end(registrationForm, {render_rest: false})    }}
+        </div>
+    </div>
+
+    {{ form_end(registrationForm) }}
+{% endblock %}
