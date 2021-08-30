@@ -37,7 +37,11 @@
                             <a class="nav-link" href="{{ path('wish_ajouter') }}">Ajouter</a>
                         </li>
                     </ul>
+                    {% if app.user == true %}
+                    <span class="navbar-text"><a href="{{ path('app_logout') }}">Se Déconnecter</a></span>
+                    {% else %}
                     <span class="navbar-text"><a href="{{ path('app_login') }}">Connexion</a>/<a href="{{ path('app_register') }}">S'inscrire</a></span>
+                    {% endif %}
                 </div>
             </nav>
         </header>

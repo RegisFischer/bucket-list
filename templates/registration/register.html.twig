@@ -6,7 +6,7 @@
     <h1></h1>
 
     <div class="container">
-        <h2>Ajouter un Wish</h2>
+        <h2>Inscription d'un Utilisateur</h2>
         <div class="form-control mt-3 p-3 mx-auto">
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm._token) }}
@@ -14,21 +14,32 @@
                 {{ form_errors(registrationForm) }}
             </div>
             <div class="row mb-3">
-                <div class="col-2 offset-1">
-                    {{ form_label(registrationForm.email,'Adresse Email : ') }}
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-3 offset-2">{{ form_label(registrationForm.email,'Adresse Email : ') }}</div>
+                        <div class="col-3">{{ form_widget(registrationForm.email) }}</div>
+                    </div>
+                        <span class="message-erreur">{{ form_errors(registrationForm.email) }} </span>
                 </div>
-                <div class="col-2">{{ form_widget(registrationForm.email) }}</div>
-                <div class="col-1  offset-2">
-                    {{ form_label(registrationForm.username,'Username : ') }}
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-3 offset-2">
+                            {{ form_label(registrationForm.username,'Username : ') }}
+                        </div>
+                        <div class="col-3">
+                            {{ form_widget(registrationForm.username) }}
+                        </div>
+                    </div>
+                    <span class="message-erreur">{{ form_errors(registrationForm.username) }}</span>
                 </div>
-                <div class="col">{{ form_widget(registrationForm.username) }}</div>
-            </div>
 
-            <div class="row mb-3">
+
+            <div class="row mb-3 mt-4">
                 <div class="col-2  offset-1">
                     {{ form_label(registrationForm.plainPassword,'Mot de Passe :') }}
                 </div>
                 <div class="col-5">{{ form_widget(registrationForm.plainPassword) }}</div>
+                <span class="message-erreur">{{ form_errors(registrationForm.plainPassword) }}</span>
             </div>
 
             <div class="row ">

@@ -7,6 +7,7 @@ use App\Entity\Wish;
 use App\Form\WishType;
 use App\Repository\CategoryRepository;
 use App\Repository\WishRepository;
+use App\Util\Censurator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,14 +71,17 @@ class WishController extends AbstractController
     /**
      * @Route("/ajouter", name="ajouter")
      */
-    public function ajouter(Request $request):Response{
+    public function ajouter(Request $request,Censurator $censure):Response{
         $wish = new Wish();
 
         $wishForm = $this->createForm(WishType::class,$wish);
         $wishForm->handleRequest($request);
 
+
         if($wishForm->isSubmitted() && $wishForm->isValid()){
 
+            $wish=$censure->purify($wish);
+            $wish->setIsPublished(true);
             $this->em->persist($wish);
             $this->em->flush();
             $this->addFlash('success','Wish Ajouté');
@@ -92,14 +96,14 @@ class WishController extends AbstractController
     /**
      * @Route("/modifier/{id}", name="modifier")
      */
-    public function modifier(Request $request,int $id):Response{
+    public function modifier(Request $request,int $id,Censurator $censure):Response{
         $wish = $this->repo->find($id);
 
         $wishForm = $this->createForm(WishType::class,$wish);
-        dump($wishForm);
         $wishForm->handleRequest($request);
 
         if($wishForm->isSubmitted() && $wishForm->isValid()){
+            $wish=$censure->purify($wish);
             $this->em->flush();
             $this->addFlash('success','Wish Modifié');
             return $this->redirectToRoute('wish_list');
