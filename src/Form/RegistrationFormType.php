@@ -37,9 +37,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('Inscription',SubmitType::class)
-        ;
-        dump($builder);
+            ->add('Inscription',SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

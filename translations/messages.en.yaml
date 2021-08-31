@@ -1,0 +1,16 @@
+base :
+  menu:
+    itemAccueil: Home
+    itemAPropos: About us
+    itemListe : List
+    itemAjouter : Add
+    itemConnexion : Connect
+    itemInscription: Register
+    itemDeconnexion: Logout
+
+FormAjout : Add a Wish
+Titre : Title
+Auteur : Author
+Categorie : Caterory
+Description : description
+Publier : Publish

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Bucket-List{% endblock %}</title>
@@ -26,21 +26,21 @@
                             <img src="{{ asset("assets/img/logo.svg") }}" alt="logo du site">
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('main_home') }}">Accueil</a>
+                            <a class="nav-link" href="{{ path('main_home') }}">{% trans %}base.menu.itemAccueil{% endtrans %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('main_about') }}">About Us</a>
+                            <a class="nav-link" href="{{ path('main_about') }}">{% trans %}base.menu.itemAPropos{% endtrans %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('wish_list') }}">Liste</a>
+                            <a class="nav-link" href="{{ path('wish_list') }}">{% trans %}base.menu.itemListe{% endtrans %}</a>
                         </li><li class="nav-item">
-                            <a class="nav-link" href="{{ path('wish_ajouter') }}">Ajouter</a>
+                            <a class="nav-link" href="{{ path('wish_ajouter') }}">{% trans %}base.menu.itemAjouter{% endtrans %}</a>
                         </li>
                     </ul>
                     {% if app.user == true %}
-                    <span class="navbar-text"><a href="{{ path('app_logout') }}">Se Déconnecter</a></span>
+                    <span class="navbar-text"><a href="{{ path('app_logout') }}">{% trans %}base.menu.itemDeconnexion{% endtrans %}</a></span>
                     {% else %}
-                    <span class="navbar-text"><a href="{{ path('app_login') }}">Connexion</a>/<a href="{{ path('app_register') }}">S'inscrire</a></span>
+                    <span class="navbar-text"><a href="{{ path('app_login') }}">{% trans %}base.menu.itemConnexion{% endtrans %}</a>/<a href="{{ path('app_register') }}">{% trans %}base.menu.itemInscription{% endtrans %}</a></span>
                     {% endif %}
                 </div>
             </nav>

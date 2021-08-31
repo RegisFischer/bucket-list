@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Event\ExempleEvent;
+use App\EventListener\ExempleEventListener;
+use App\Util\MailLogger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +20,7 @@ class MainController extends AbstractController
      */
     public function index(): Response
     {
+
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
         ]);
@@ -25,7 +29,8 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home():Response{
+    public function home(MailLogger $mail):Response{
+        dump($mail);
         return $this->render('main/home.html.twig',[]);
     }
 

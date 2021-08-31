@@ -1,0 +1,16 @@
+base :
+  menu:
+    itemAccueil: Accueil
+    itemAPropos: A propos de nous
+    itemListe : liste
+    itemAjouter : Ajouter
+    itemConnexion : Connexion
+    itemInscription: S'inscrire
+    itemDeconnexion: Se Déconnecter
+
+FormAjout : Ajouter un Wish
+Titre : Titre
+Auteur : Auteur
+Categorie : Caterorie
+Description : description
+Publier : Publier

@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
 {%  block body %}
+    {% set labelTitre %}{% trans %}Titre{% endtrans %}{% endset %}
+    {% set labelAuteur %}{% trans %}Auteur{% endtrans %}{% endset %}
+    {% set labelCategorie %}{% trans %}Categorie{% endtrans %}{% endset %}
+    {% set labelDescription %}{% trans %}Description{% endtrans %}{% endset %}
+    {% set labelBouton %}{% trans %}Publier{% endtrans %}{% endset %}
     {% form_theme wishForm 'foundation_5_layout.html.twig' %}
     <div class="container">
-        <h2>Ajouter un Wish</h2>
+        <h2>{% trans %}FormAjout{% endtrans %}</h2>
         <div class="form-control mt-3 p-3 mx-auto">
             {{ form_start(wishForm) }}
             {{ form_row(wishForm._token) }}
@@ -11,30 +16,32 @@
             </div>
             <div class="row mb-3">
                 <div class="col-1 offset-2">
-                    {{ form_label(wishForm.title,'Titre : ') }}
+
+                    {{ form_label(wishForm.title,labelTitre) }}
                 </div>
                 <div class="col-2">{{ form_widget(wishForm.title) }}</div>
                 <div class="col-1">
-                    {{ form_label(wishForm.author,'Auteur : ') }}
+                    {{ form_label(wishForm.author,labelAuteur) }}
                 </div>
                 <div class="col">{{ form_widget(wishForm.author) }}</div>
             </div>
             <div class="row mb-3">
                 <div class="col-1  offset-2">
-                    {{ form_label(wishForm.category,'Categorie :') }}
+                    {{ form_label(wishForm.category,labelCategorie) }}
                 </div>
                 <div class="col-2">{{ form_widget(wishForm.category) }}</div>
             </div>
             <div class="row mb-3">
                 <div class="col-5  offset-2">
-                    {{ form_label(wishForm.description,'Description :') }}
+                    {{ form_label(wishForm.description,labelDescription) }}
                 </div>
                 <div class="col-5 offset-3">{{ form_widget(wishForm.description, { 'attr': {'class': 'textare'}} ) }}</div>
             </div>
 
             <div class="row ">
                 <div class="col offset-5">
-                    {{ form_row(wishForm.Publier, { 'attr': {'class': 'btn btn-primary'}} ) }}
+                    {{ form_label(wishForm.Publier,labelBouton) }}
+                    {{ form_widget(wishForm.Publier, { 'attr': {'class': 'btn btn-primary'}} ) }}
                 </div>
                </div>
 
